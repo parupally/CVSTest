@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+
+        <item name="queryBackground">@color/colorContainer</item>
+        <item name="background">@color/colorContainer</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="queryHint">@string/search_photos</item>
+        <item name="android:queryHint">@string/search_photos</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
+    </style>
+</resources>
