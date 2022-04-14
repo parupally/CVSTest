@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">CVSTest</string>
-    <string name="search_photos">Search Images</string>
+    <string name="search_images">Search Images</string>
+    <string name="content_image_view">ImageView</string>
+    <string name="image_view">ImageViews</string>
+    <string name="recent_search_empty">You have no recent searches. Enter a search term above</string>
+    <string name="recent_search">Recent Searches</string>
+
 </resources>

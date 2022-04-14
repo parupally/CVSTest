@@ -9,11 +9,10 @@
         style="@style/SearchViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="@dimen/layout_margin_4"
         android:includeFontPadding="false"
-        android:padding="2dp"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="16sp"
+        android:textSize="@dimen/extra_big_text_size"
         android:textStyle="bold"
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,6 +21,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:queryHint="Search Images" />
+        app:queryHint="Search Images"
+        app:searchIcon="@null" />
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/large_text_size"
+        android:layout_marginEnd="@dimen/item_padding"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_view">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSearchHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search_images"
+            android:textSize="@dimen/extra_big_text_size"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

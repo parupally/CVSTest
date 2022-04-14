@@ -5,8 +5,8 @@
         <item name="queryBackground">@color/colorContainer</item>
         <item name="background">@color/colorContainer</item>
         <item name="searchHintIcon">@null</item>
-        <item name="queryHint">@string/search_photos</item>
-        <item name="android:queryHint">@string/search_photos</item>
+        <item name="queryHint">@string/search_images</item>
+        <item name="android:queryHint">@string/search_images</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textColorSecondary">@color/colorAccent</item>
     </style>

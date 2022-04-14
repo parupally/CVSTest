@@ -1,7 +1,5 @@
-package com.example.cvstest
+package com.example.cvstest.ui
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -9,7 +7,7 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cvstest.databinding.ImageAdapterBinding
-import kotlinx.android.synthetic.main.image_adapter.view.*
+import com.example.cvstest.model.Item
 
 class ImagesAdapter (val images: MutableList<Item> = mutableListOf()): RecyclerView.Adapter<ImagesAdapter.ViewHolder>() ,
     Filterable {
@@ -17,10 +15,21 @@ class ImagesAdapter (val images: MutableList<Item> = mutableListOf()): RecyclerV
 
     var imageListFiltered: MutableList<Item> = mutableListOf()
 
-    inner class ViewHolder(private val binding: ImageAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    private var onItemClick: ((Item) -> Unit)? = null
+
+    fun setOnItemClickListener(item: (Item) -> Unit) {
+        onItemClick = item
+    }
+    inner class ViewHolder(val binding: ImageAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(imageResponse: Item) {
             binding.title.text =imageResponse.title
             Glide.with(binding.imageView).load(imageResponse.media.m).into(binding.imageView)
+        }
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(imageListFiltered[adapterPosition])
+            }
         }
     }
 
@@ -46,20 +55,19 @@ class ImagesAdapter (val images: MutableList<Item> = mutableListOf()): RecyclerV
         notifyDataSetChanged()
     }
     override fun getFilter(): Filter {
+
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val charString = constraint?.toString() ?: ""
-                if (charString.isEmpty()) imageListFiltered = images else {
-                    val filteredList = ArrayList<Item>()
-                    images
-                        .filter {
-                            (it.title.lowercase().contains(constraint!!)) or
-                                    (it.author.lowercase().contains(constraint))
-
-                        }
-                        .forEach { filteredList.add(it) }
-                    imageListFiltered = filteredList
-
+                val filteredList = ArrayList<Item>()
+                if (constraint?.toString()!!.contains(",")){
+                    val searchChar = constraint.toString().split(",")
+                    for(charValue in searchChar){
+                        if(charValue.isNotEmpty())
+                        checkFilter(charValue,charValue,filteredList)
+                    }
+                } else {
+                    val charString = constraint.toString() ?: ""
+                    checkFilter(charString, constraint,filteredList)
                 }
                 return FilterResults().apply { values = imageListFiltered }
             }
@@ -72,6 +80,20 @@ class ImagesAdapter (val images: MutableList<Item> = mutableListOf()): RecyclerV
                 notifyDataSetChanged()
 
             }
+        }
+    }
+    fun checkFilter(charString: String, constraint: CharSequence, filteredList: ArrayList<Item>) {
+        imageListFiltered = if (charString.isEmpty())
+            images else {
+            images
+                .filter {
+                    (it.title.lowercase().contains(constraint!!)) or
+                            (it.author.lowercase().contains(constraint))
+
+                }
+                .forEach { filteredList.add(it) }
+            filteredList
+
         }
     }
 }
